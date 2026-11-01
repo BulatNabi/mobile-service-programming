@@ -14,3 +14,5 @@
 | [8. Адаптивные интерфейсы](lab-08-adaptive-layouts/README.md) | Unit 4, pathway 3 | Reply, Sports, My City |
 
 Исходные материалы курса: [Android Basics with Compose](https://developer.android.com/courses/android-basics-compose/course).
+
+Результаты сверки лабораторных с курсом: [отчёт](reports/Сверка лабораторных Android.md).

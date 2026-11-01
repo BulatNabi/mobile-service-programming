@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,12 +25,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,12 +54,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            var selectedTab by remember { mutableIntStateOf(0) }
             Pathway3Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    ArtSpaceApp() // <-- Заменили вызов функции на ArtSpaceApp
-                    //TipTimeLayout()
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        ScrollableTabRow(
+                            selectedTabIndex = selectedTab,
+                            modifier = Modifier.statusBarsPadding()
+                        ) {
+                            listOf("Tip Time", "Art Space").forEachIndexed { index, title ->
+                                Tab(
+                                    selected = selectedTab == index,
+                                    onClick = { selectedTab = index },
+                                    text = { Text(title) }
+                                )
+                            }
+                        }
+                        Box(modifier = Modifier.weight(1f)) {
+                            if (selectedTab == 0) TipTimeLayout() else ArtSpaceApp()
+                        }
+                    }
                 }
             }
         }
