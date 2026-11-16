@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +16,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -148,10 +148,12 @@ fun LemonTextAndImage(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Button(
-                onClick = onImageClick,
-                shape = RoundedCornerShape(dimensionResource(R.dimen.button_corner_radius)),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(dimensionResource(R.dimen.button_corner_radius)))
+                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                    .clickable(onClick = onImageClick)
+                    .padding(dimensionResource(R.dimen.button_interior_padding))
             ) {
                 Image(
                     painter = painterResource(drawableResourceId),
@@ -159,7 +161,6 @@ fun LemonTextAndImage(
                     modifier = Modifier
                         .width(dimensionResource(R.dimen.button_image_width))
                         .height(dimensionResource(R.dimen.button_image_height))
-                        .padding(dimensionResource(R.dimen.button_interior_padding))
                 )
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_vertical)))
